@@ -1,0 +1,30 @@
+{
+  "name": "bruno-3d-room",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.8",
+    "eslint": "8.27.0",
+    "eslint-config-next": "13.0.3",
+    "gsap": "^3.11.3",
+    "lil-gui": "^0.17.0",
+    "next": "13.0.3",
+    "normalize-wheel": "^1.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "three": "^0.146.0",
+    "typescript": "4.8.4"
+  },
+  "devDependencies": {
+    "@types/normalize-wheel": "^1.0.1",
+    "@types/three": "^0.146.0"
+  }
+}

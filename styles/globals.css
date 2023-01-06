@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  width: auto;
+  height: auto;
+}
+
+.webGl-Wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.webGl-canvas {
+  width: 100%;
+  height: 100%;
+}
