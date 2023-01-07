@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import DefaultExperience from '../utils/DefaultExperience';
-import { Camera3dSpace, DefaultExperienceOptions } from '../utils/types';
+import { Camera3dSpace, DefaultExperienceConfig } from '../utils/types';
 import sources from './sources';
 import World from './World';
 
@@ -17,8 +17,9 @@ const camera3dSpace: Camera3dSpace = {
 //     fov: 75
 // }
 
-const defaultExperienceOptions: DefaultExperienceOptions = {
-    useWindowSizeOnResize: true
+const defaultExperienceConfig: DefaultExperienceConfig = {
+    useWindowSizeOnResize: true,
+    showPerformance: true
 }
 
 export default class RoomExperience extends DefaultExperience {
@@ -29,7 +30,7 @@ export default class RoomExperience extends DefaultExperience {
         if (RoomExperience._instance instanceof RoomExperience) {
             return RoomExperience._instance
         }
-        super(canvas, camera3dSpace, defaultExperienceOptions, sources)
+        super(canvas, camera3dSpace, defaultExperienceConfig, sources)
 
         this.world = new World(this)
 

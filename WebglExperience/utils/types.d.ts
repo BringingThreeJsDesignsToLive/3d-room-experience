@@ -2,8 +2,9 @@ import Sizes from "./Sizes";
 import Time from "./Time";
 import Camera from "./Camera";
 
-export interface DefaultExperienceOptions {
-    useWindowSizeOnResize: boolean
+export interface DefaultExperienceConfig {
+    useWindowSizeOnResize: boolean,
+    showPerformance: boolean
 }
 
 
