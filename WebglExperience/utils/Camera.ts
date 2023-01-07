@@ -44,9 +44,9 @@ export default class Camera {
 
     private addDebugUi() {
         if (this.debugUI.isActive) {
-            this.debugUI.ui.add(this.cameraInstance.position, 'x').min(-10).max(10).step(0.0001).name('cameraX')
-            this.debugUI.ui.add(this.cameraInstance.position, 'y').min(-10).max(10).step(0.0001).name('cameraY')
-            this.debugUI.ui.add(this.cameraInstance.position, 'z').min(-10).max(10).step(0.0001).name('cameraZ')
+            const PARAMS = { camera: { x: 0, y: 20, z: -10 } };
+
+            this.debugUI.ui.addInput(PARAMS, "camera");
         }
     }
     resize(): void {

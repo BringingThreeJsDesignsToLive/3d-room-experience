@@ -1,18 +1,17 @@
-import GUI from 'lil-gui';
+
+import { Pane } from 'tweakpane'
 export default class DebugUI {
     isActive: boolean;
-    ui!: GUI;
+    ui: Pane;
     debugFolder: object = {}
     constructor() {
         this.isActive = window.location.hash === '#debug'
-        if (this.isActive) {
-            this.ui = new GUI();
-        }
+        this.ui = new Pane({ title: 'Tweak Values' });
     }
 
     destroy() {
         if (this.isActive) {
-            this.ui.destroy();
+            this.ui.dispose();
         }
 
     }
