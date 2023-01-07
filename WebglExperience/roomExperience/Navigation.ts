@@ -92,8 +92,10 @@ export default class Navigation {
                 smoothed: zoomValue,
                 smoothing: 0.005,
                 sensitivity: 0.001,
+                // maxDistance: 3.6,
+                // minDistance: 1
                 maxDistance: 3.6,
-                minDistance: 1
+                minDistance: -5
             },
             target: {
                 value: targetValue.clone(),

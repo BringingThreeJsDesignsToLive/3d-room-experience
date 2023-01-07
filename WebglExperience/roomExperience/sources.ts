@@ -39,7 +39,7 @@ const sources = [
         path: '/assets/webGL/googleHomeLightMaskTexture.png',
         useDraco: false,
         sourceType: THREE.Texture
-    },
+    }
 ] as const
 
 const sourceClone = ([...sources] as any) as Sources[]
