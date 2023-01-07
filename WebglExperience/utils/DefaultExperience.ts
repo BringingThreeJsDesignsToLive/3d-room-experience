@@ -2,10 +2,11 @@ import Sizes from ".//Sizes";
 import Time from "./Time";
 import * as THREE from 'three'
 import Camera from "./Camera";
-import { Camera3dSpace, DefaultExperienceOptions, Sources } from './types'
+import { Camera3dSpace, DefaultExperienceConfig, Sources } from './types'
 import Renderer from "./Renderer";
 import DebugUI from "./DebugUI";
 import ResourcesLoader from "./ResourcesLoader";
+import PerformanceStats from "./Stats";
 
 
 export default class DefaultExperience {
@@ -17,17 +18,19 @@ export default class DefaultExperience {
     renderer: Renderer;
     resourcesLoader!: ResourcesLoader;
     debugUI: DebugUI;
+    performanceStats: PerformanceStats;
 
 
-    constructor(canvas: HTMLCanvasElement, camera3dSpace: Camera3dSpace, options: DefaultExperienceOptions, sources?: Sources[]) {
+    constructor(canvas: HTMLCanvasElement, camera3dSpace: Camera3dSpace, config: DefaultExperienceConfig, sources?: Sources[]) {
         // set up
         this.debugUI = new DebugUI();
         this.canvas = canvas;
-        this.sizes = new Sizes(canvas, options);
+        this.sizes = new Sizes(canvas, config);
         this.time = new Time();
         this.scene = new THREE.Scene();
         this.camera = new Camera(this, camera3dSpace);
-        this.renderer = new Renderer(this)
+        this.renderer = new Renderer(this);
+        this.performanceStats = new PerformanceStats(config)
         if (sources) this.resourcesLoader = new ResourcesLoader(sources)
 
 
@@ -48,6 +51,7 @@ export default class DefaultExperience {
         this.camera.destroy();
         this.sizes.destroy();
         this.time.destroy();
+        this.performanceStats.destroy();
         if (this.resourcesLoader) this.resourcesLoader.destroy();
 
         this.scene.traverse((child: any) => {
