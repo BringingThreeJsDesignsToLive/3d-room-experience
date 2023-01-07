@@ -20,7 +20,8 @@ export interface Sources {
     useDraco: boolean;
     path: string | string[];
     groupName?: string,
-    totalGroupMember?: number
+    totalGroupMember?: number,
+    sourceType: any
 }
 
 export interface MouseCursorPosition {

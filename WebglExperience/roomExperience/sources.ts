@@ -1,10 +1,10 @@
 /**
  * THIS FILE CONTAINS ALL THE ASSESTS e.g textures, THAT WILL BE USED IN THE LOGIN PAGE EXPERIENCE
  */
-
-import { Sources } from '../utils/types'
-
-const sources: Sources[] = [
+import * as THREE from 'three'
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
+import { Sources } from '../utils/types';
+const sources = [
 
     {
         name: '3dRoomModel',
@@ -13,6 +13,7 @@ const sources: Sources[] = [
         useDraco: true,
         groupName: '3dRoom',
         totalGroupMember: 3,
+        sourceType: {}
     },
     {
         name: 'baked1',
@@ -21,6 +22,7 @@ const sources: Sources[] = [
         useDraco: false,
         groupName: '3dRoom',
         totalGroupMember: 3,
+        sourceType: THREE.Texture
     },
     {
         name: 'baked2',
@@ -29,8 +31,22 @@ const sources: Sources[] = [
         useDraco: false,
         groupName: '3dRoom',
         totalGroupMember: 3,
+        sourceType: THREE.Texture
     },
-]
+    {
+        name: 'googleLedLightTexture',
+        type: 'texture',
+        path: '/assets/webGL/googleHomeLightMaskTexture.png',
+        useDraco: false,
+        sourceType: THREE.Texture
+    },
+] as const
+
+const sourceClone = ([...sources] as any) as Sources[]
 
 
-export default sources
+
+export type RoomSourceNames = typeof sources[number]["name"]
+
+
+export default sourceClone
