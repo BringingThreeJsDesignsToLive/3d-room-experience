@@ -16,14 +16,14 @@ interface itemsTypes {
 
 
 export default class ResourcesLoader extends EventEmitter {
-    sources: Sources[];
+    private sources: Sources[];
     items: itemsTypes;
-    groupedItems: any;
-    toLoad: number;
-    loaded: number = 0;
-    gltfLoader!: GLTFLoader;
-    cubeTextureLoader!: THREE.CubeTextureLoader;
-    textureLoader!: THREE.TextureLoader
+    private groupedItems: any;
+    private toLoad: number;
+    private loaded: number = 0;
+    private gltfLoader!: GLTFLoader;
+    private cubeTextureLoader!: THREE.CubeTextureLoader;
+    private textureLoader!: THREE.TextureLoader
 
     constructor(sources: Sources[]) {
         // Initialize
@@ -44,7 +44,7 @@ export default class ResourcesLoader extends EventEmitter {
 
     }
 
-    loadSources() {
+    private loadSources() {
         // loop through and load each sources passed base on their source type
         this.sources.forEach((source) => {
             if (source.type === 'texture') {
@@ -74,7 +74,7 @@ export default class ResourcesLoader extends EventEmitter {
             }
         })
     }
-    sourceLoaded(source: Sources, file: any) {
+    private sourceLoaded(source: Sources, file: any) {
         this.items[source.name] = file;
         this.loaded++
 
