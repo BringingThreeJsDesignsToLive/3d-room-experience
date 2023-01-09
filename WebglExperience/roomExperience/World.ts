@@ -97,6 +97,7 @@ export default class World {
         this.navigation.update();
         this.googleLedLights.update();
         this.emissionLights.update();
+        this.coffeeSteam.update();
 
 
     }
