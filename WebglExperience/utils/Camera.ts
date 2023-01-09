@@ -44,9 +44,16 @@ export default class Camera {
 
     private addDebugUi() {
         if (this.debugUI.isActive) {
+            const cameraFolder = this.debugUI.ui.addFolder({
+                title: "camera",
+                expanded: false
+            })
             const PARAMS = { camera: { x: 0, y: 20, z: -10 } };
 
-            this.debugUI.ui.addInput(PARAMS, "camera");
+            cameraFolder.addInput(PARAMS, "camera").on("change", () => {
+                const { x, y, z } = PARAMS.camera;
+                this.cameraInstance.position.set(x, y, z);
+            })
         }
     }
     resize(): void {

@@ -50,6 +50,10 @@ export default class GoogleLedLights {
 
     addDebugUI() {
         if (this.debugUI.isActive) {
+            const googleLedColors = this.debugUI.ui.addFolder({
+                title: "GoogleLedColors",
+                expanded: false
+            })
             const PARAMS = {
                 Led0: '',
                 Led1: '',
@@ -60,7 +64,7 @@ export default class GoogleLedLights {
 
             this.leds.forEach((led, i) => {
                 PARAMS[`Led${i}` as ParamsKeyType] = led?.color as string
-                this.debugUI.ui.addInput(PARAMS, `Led${i}` as ParamsKeyType).on('change', () => {
+                googleLedColors.addInput(PARAMS, `Led${i}` as ParamsKeyType).on('change', () => {
                     led.mesh.material.color.set(PARAMS[`Led${i}` as ParamsKeyType]);
                 })
             })

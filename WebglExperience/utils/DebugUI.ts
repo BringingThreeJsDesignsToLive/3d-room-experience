@@ -2,11 +2,14 @@
 import { Pane } from 'tweakpane'
 export default class DebugUI {
     isActive: boolean;
-    ui: Pane;
+    ui!: Pane;
     debugFolder: object = {}
     constructor() {
         this.isActive = window.location.hash === '#debug'
-        this.ui = new Pane({ title: 'Tweak Values' });
+        if (this.isActive) {
+            this.ui = new Pane({ title: 'Tweak Values' });
+        }
+
     }
 
     destroy() {
