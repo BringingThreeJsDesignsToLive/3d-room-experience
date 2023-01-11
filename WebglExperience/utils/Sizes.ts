@@ -1,5 +1,5 @@
 import { EventEmitter } from './EventEmitter'
-import { DefaultExperienceOptions } from './types';
+import { DefaultExperienceConfig } from './types';
 
 export default class Sizes extends EventEmitter {
     public width: number;
@@ -10,7 +10,7 @@ export default class Sizes extends EventEmitter {
     public isMobileScreen: boolean;
     public smallestSide: number;
     public lagestSide: number;
-    constructor(canvas: HTMLCanvasElement, options: DefaultExperienceOptions) {
+    constructor(canvas: HTMLCanvasElement, options: DefaultExperienceConfig) {
         // Initialize
         super()
         this.canvas = canvas;
