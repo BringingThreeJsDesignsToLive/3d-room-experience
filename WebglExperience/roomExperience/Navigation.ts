@@ -75,7 +75,7 @@ export default class Navigation {
             spherical: {
                 value: sphericalCoords.clone(),
                 smoothed: sphericalCoords.clone(),
-                smoothing: 0.005,
+                smoothing: 0.002,
             },
             drag: {
                 delta: { x: 0, y: 0 },
@@ -90,7 +90,7 @@ export default class Navigation {
             zoom: {
                 value: zoomValue,
                 smoothed: zoomValue,
-                smoothing: 0.005,
+                smoothing: 0.002,
                 sensitivity: 0.001,
                 // maxDistance: 3.6,
                 // minDistance: 1
@@ -100,7 +100,7 @@ export default class Navigation {
             target: {
                 value: targetValue.clone(),
                 smoothed: targetValue.clone(),
-                smoothing: 0.009,
+                smoothing: 0.002,
                 limits: {
                     x: { min: Math.PI / -5, max: Math.PI / 10 },
                     y: { min: Math.PI / 30, max: Math.PI / 3 },
