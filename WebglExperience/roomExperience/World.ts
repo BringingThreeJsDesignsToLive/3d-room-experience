@@ -8,6 +8,8 @@ import { RoomSourceNames } from './sources';
 import Time from '../utils/Time';
 import { EmissionLights, lightNames } from './EmissionLights';
 import CoffeSteam from './CoffeSteam';
+import ChairTop from './ChairTop';
+import ScreenAnimation, { ScreenMeshType } from './ScreenAnimation';
 
 
 
@@ -21,6 +23,8 @@ export default class World {
     googleLedLights: GoogleLedLights
     emissionLights: EmissionLights;
     coffeeSteam: CoffeSteam;
+    chairTop: ChairTop;
+    screenAnimation: ScreenAnimation;
 
     constructor(experience: RoomExperience) {
         // Initialize
@@ -32,6 +36,8 @@ export default class World {
         this.googleLedLights = new GoogleLedLights(experience);
         this.emissionLights = new EmissionLights(experience);
         this.coffeeSteam = new CoffeSteam(experience);
+        this.chairTop = new ChairTop(experience);
+        this.screenAnimation = new ScreenAnimation(experience);
 
 
         this.setUp3dRoom();
@@ -70,6 +76,16 @@ export default class World {
                     this.coffeeSteam.steamMesh = child;
                 }
 
+                // extract screen objects
+                if (new RegExp('screen', 'i').test(child.name)) {
+                    this.screenAnimation.screensMesh[child.name as keyof ScreenMeshType].mesh = child;
+                }
+
+                //get chair object
+                if (child.name === "chairTop") {
+                    this.chairTop.objectMesh = child;
+                }
+
                 // extract googlelight object
                 if (child.name.includes("googleHomeLed")) {
                     // get the last char of the name which should be a number
@@ -83,6 +99,9 @@ export default class World {
 
             this.emissionLights.isMeshComplete = true;
             this.emissionLights.setupLights();
+
+            this.screenAnimation.isMeshComplete = true;
+            this.screenAnimation.setUpScreens();
 
             this.coffeeSteam.setUpSteam();
 
@@ -98,10 +117,13 @@ export default class World {
         this.googleLedLights.update();
         this.emissionLights.update();
         this.coffeeSteam.update();
+        this.chairTop.update();
+        this.screenAnimation.update();
 
 
     }
 
     destroy = () => {
+        this.navigation.destroy();
     }
 }

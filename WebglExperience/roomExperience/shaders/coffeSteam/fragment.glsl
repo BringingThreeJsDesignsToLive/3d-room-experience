@@ -9,7 +9,7 @@ void main() {
     vec2 uv = vUv * uUvFrequency;
     uv.y += uTime * uTimeFrequency;
     float perlin = perlin3d(uv);
-    perlin *= borderAlpha;
+    perlin *= borderAlpha * 0.2;
     perlin = min(perlin, 1.0);
     gl_FragColor = vec4(1.0, 1.0, 1.0, perlin);
 }
