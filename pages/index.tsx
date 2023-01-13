@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useEffect, useRef } from 'react'
+import MuiCustomizedSwitch from '../components/MuiCustomizedSwitch';
 import RoomExperience from '../WebglExperience/roomExperience';
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
 
       <main className='webGl-Wrapper'>
         <canvas className='webGl-canvas' ref={canvas}></canvas>
+        <MuiCustomizedSwitch />
       </main>
 
     </div>
