@@ -10,6 +10,7 @@ import { EmissionLights, lightNames } from './EmissionLights';
 import CoffeSteam from './CoffeSteam';
 import ChairTop from './ChairTop';
 import ScreenAnimation, { ScreenMeshType } from './ScreenAnimation';
+import TimeZone from './TimeZone';
 
 
 
@@ -25,6 +26,7 @@ export default class World {
     coffeeSteam: CoffeSteam;
     chairTop: ChairTop;
     screenAnimation: ScreenAnimation;
+    timeZone: TimeZone;
 
     constructor(experience: RoomExperience) {
         // Initialize
@@ -38,6 +40,7 @@ export default class World {
         this.coffeeSteam = new CoffeSteam(experience);
         this.chairTop = new ChairTop(experience);
         this.screenAnimation = new ScreenAnimation(experience);
+        this.timeZone = new TimeZone(experience);
 
 
         this.setUp3dRoom();
@@ -119,6 +122,7 @@ export default class World {
         this.coffeeSteam.update();
         this.chairTop.update();
         this.screenAnimation.update();
+        this.timeZone.update();
 
 
     }

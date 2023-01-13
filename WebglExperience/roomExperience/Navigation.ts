@@ -83,7 +83,7 @@ export default class Navigation {
                 sensitivity: 1,
                 alternative: false,
                 minXdrag: Math.PI / -2,
-                maxXdrag: Math.PI / 12,
+                maxXdrag: Math.PI / 23,
                 minYdrag: Math.PI / 50,
                 maxYdrag: Math.PI / 2.2
             },

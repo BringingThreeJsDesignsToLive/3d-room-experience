@@ -42,7 +42,7 @@ export default class CoffeSteam {
         if (this.debugUI.isActive) {
             const coffeeSteamFolder = this.debugUI.ui.addFolder({
                 title: "Coffee Steam",
-                expanded: true,
+                expanded: false,
             })
             const PARAMS = {
                 position: { x: this.steamMesh.position.x, y: this.steamMesh.position.y, z: this.steamMesh.position.z },
