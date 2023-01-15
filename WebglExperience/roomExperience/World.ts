@@ -11,6 +11,9 @@ import CoffeSteam from './CoffeSteam';
 import ChairTop from './ChairTop';
 import ScreenAnimation, { ScreenMeshType } from './ScreenAnimation';
 import TimeZone from './TimeZone';
+import vertexShader from './shaders/bakedTextures/vertex.glsl';
+import fragmentShader from './shaders/bakedTextures/fragment.glsl';
+import BakedTextures from './BakedTexture';
 
 
 
@@ -27,6 +30,7 @@ export default class World {
     chairTop: ChairTop;
     screenAnimation: ScreenAnimation;
     timeZone: TimeZone;
+    bakedTextures: BakedTextures
 
     constructor(experience: RoomExperience) {
         // Initialize
@@ -41,6 +45,7 @@ export default class World {
         this.chairTop = new ChairTop(experience);
         this.screenAnimation = new ScreenAnimation(experience);
         this.timeZone = new TimeZone(experience);
+        this.bakedTextures = new BakedTextures(experience, this.timeZone);
 
 
         this.setUp3dRoom();
@@ -50,24 +55,13 @@ export default class World {
 
     setUp3dRoom() {
         this.experience.resourcesLoader.on("3dRoomReady", () => {
-            // set up baked1 material
-            const baked1Material = new THREE.MeshBasicMaterial({ color: 'grey' });
-            this.loadedResource.baked1.encoding = THREE.sRGBEncoding
-            this.experience.renderer.rendererInstance.outputEncoding = THREE.sRGBEncoding
-            this.loadedResource.baked1.flipY = false;
-            baked1Material.map = this.loadedResource.baked1
-
-            // set up baked2 material
-            const baked2Material = new THREE.MeshBasicMaterial({ color: 'grey' });
-            this.loadedResource.baked2.encoding = THREE.sRGBEncoding
-            this.loadedResource.baked2.flipY = false;
-            baked2Material.map = this.loadedResource.baked2;
+            this.bakedTextures.setUp();
 
 
             // loop through scene children and add material to the appropriate model
             this.loadedResource['3dRoomModel'].scene.traverse((child: any) => {
-                if (child.parent?.name === "baked1") child.material = baked1Material;
-                if (child.parent?.name === "baked2") child.material = baked2Material;
+                if (child.parent?.name === "baked1") child.material = this.bakedTextures.baked1Material;
+                if (child.parent?.name === "baked2") child.material = this.bakedTextures.baked2Material;
 
                 // extract emission lights
                 if (new RegExp('light', 'i').test(child.name)) {
@@ -123,6 +117,7 @@ export default class World {
         this.chairTop.update();
         this.screenAnimation.update();
         this.timeZone.update();
+        this.bakedTextures.update();
 
 
     }
