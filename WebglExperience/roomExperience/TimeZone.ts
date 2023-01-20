@@ -5,20 +5,29 @@ import RoomExperience from ".";
 import vertexShader from './shaders/timeZone/vertex.glsl';
 import fragmentShader from './shaders/timeZone/fragment.glsl';
 import gsap from 'gsap'
+import { sourcesDefaultClone, sourceDayClone, sourceNightClone, GroupNamesType } from './sources'
+import getIsDayTime from '../../utils/getIsDayTime';
+import ResourcesLoader from '../utils/ResourcesLoader';
+import { Sources } from '../utils/types';
+import BakedTextures from './BakedTexture';
 
 export default class TimeZone {
     time: Time;
     debugUI: DebugUI;
     scene: THREE.Scene;
+    resourceLoader: ResourcesLoader;
+    bakedTextures: BakedTextures;
     sunlight!: THREE.Mesh;
     sunLightMaterial!: THREE.ShaderMaterial;
     moonlight!: THREE.Mesh;
     moonLightMaterial!: THREE.ShaderMaterial;
     isDayTime!: boolean;
-    constructor(experience: RoomExperience) {
+    constructor(experience: RoomExperience, bakedTextures: BakedTextures) {
         this.time = experience.time;
         this.debugUI = experience.debugUI;
         this.scene = experience.scene;
+        this.resourceLoader = experience.resourcesLoader;
+        this.bakedTextures = bakedTextures
 
         this.setUp();
         this.addDebugUI();
@@ -26,17 +35,30 @@ export default class TimeZone {
     }
 
     setUp() {
-
+        this.isDayTime = getIsDayTime();
+        this.isDayTime = getIsDayTime();
         const currentTimeSwitch = document.getElementById('currentTime') as HTMLInputElement;
-        if (currentTimeSwitch.value === 'true') {
-            this.isDayTime = true
+
+        // Get sources based on if its day or night
+        let sources = [] as Sources[];
+        if (this.isDayTime) {
+            sources = [...sourcesDefaultClone, ...sourceDayClone];
+            sources.forEach(source => {
+                source.groupName = '3dRoomDay' as GroupNamesType
+                source.totalGroupMember = sources.length;
+            })
         } else {
-            this.isDayTime = false;
+            sources = [...sourcesDefaultClone, ...sourceNightClone];
+            sources.forEach(source => {
+                source.groupName = '3dRoomNight' as GroupNamesType
+                source.totalGroupMember = sources.length;
+            })
         }
 
+        this.resourceLoader.loadSources(sources);
+
+
         const geometry = new THREE.PlaneGeometry(1.5, 1.5, 1, 1);
-
-
         this.setUpSunLight(geometry);
         this.setUpMoonLight(geometry);
 
@@ -89,6 +111,7 @@ export default class TimeZone {
         }
 
         this.animate();
+        this.bakedTextures.timeZoneChanged(this.isDayTime);
     }
 
 
@@ -98,11 +121,21 @@ export default class TimeZone {
         currentTimeSwitchWrapper.classList.add('Mui-disabled');
 
         if (this.isDayTime) {
+            // show sunlight 
             const tl = gsap.timeline({
                 defaults: { duration: 1, ease: 'Power0.easeInOut' }
             })
 
-            tl.to(this.moonlight.position, { y: 5.0 })
+            tl
+                .to(
+                    this.moonlight.position,
+                    {
+                        y: 5.0,
+                        onComplete: () => {
+                            this.moonlight.visible = false;
+                            this.sunlight.visible = true;
+                        }
+                    })
                 .to(this.sunlight.position, {
                     y: 1.92,
                     onComplete: () => {
@@ -111,11 +144,21 @@ export default class TimeZone {
                     }
                 })
         } else {
+            // show moonlight
             const tl = gsap.timeline({
                 defaults: { duration: 1 }
             })
 
-            tl.to(this.sunlight.position, { y: -9.0 })
+            tl
+                .to(
+                    this.sunlight.position,
+                    {
+                        y: -9.0,
+                        onComplete: () => {
+                            this.sunlight.visible = false;
+                            this.moonlight.visible = true;
+                        }
+                    })
                 .to(this.moonlight.position, {
                     y: 1.92,
                     onComplete: () => {

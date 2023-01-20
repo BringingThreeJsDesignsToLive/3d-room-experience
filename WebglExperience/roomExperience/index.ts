@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import DefaultExperience from '../utils/DefaultExperience';
 import { Camera3dSpace, DefaultExperienceConfig } from '../utils/types';
-import sources from './sources';
 import World from './World';
 
 const camera3dSpace: Camera3dSpace = {
@@ -30,7 +29,7 @@ export default class RoomExperience extends DefaultExperience {
         if (RoomExperience._instance instanceof RoomExperience) {
             return RoomExperience._instance
         }
-        super(canvas, camera3dSpace, defaultExperienceConfig, sources)
+        super(canvas, camera3dSpace, defaultExperienceConfig)
 
         this.world = new World(this)
 

@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 import { ChangeEvent, useState } from 'react';
+import getIsDayTime from '../utils/getIsDayTime';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -52,7 +53,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-let isDayTime = new Date().getHours() >= 19 ? false : true;
+let isDayTime: boolean = getIsDayTime();
 
 export default function MuiCustomizedSwitch() {
   const [value, setValue] = useState(isDayTime);

@@ -9,6 +9,7 @@ import ResourcesLoader from "./ResourcesLoader";
 import PerformanceStats from "./Stats";
 
 
+
 export default class DefaultExperience {
     canvas: HTMLCanvasElement;
     sizes: Sizes;
@@ -31,7 +32,7 @@ export default class DefaultExperience {
         this.camera = new Camera(this, camera3dSpace);
         this.renderer = new Renderer(this);
         this.performanceStats = new PerformanceStats(config)
-        if (sources) this.resourcesLoader = new ResourcesLoader(sources)
+        this.resourcesLoader = new ResourcesLoader(sources);
 
 
 

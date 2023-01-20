@@ -4,7 +4,7 @@ import DebugUI from '../utils/DebugUI';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Navigation from './Navigation';
 import GoogleLedLights from './GoogleLedLights';
-import { RoomSourceNames } from './sources';
+import { GroupNamesType, RoomSourceNames } from './sources';
 import Time from '../utils/Time';
 import { EmissionLights, lightNames } from './EmissionLights';
 import CoffeSteam from './CoffeSteam';
@@ -38,24 +38,32 @@ export default class World {
         this.loadedResource = experience.resourcesLoader?.items as Record<RoomSourceNames, any>
         this.debugUI = experience.debugUI;
         this.time = experience.time;
+
+        this.bakedTextures = new BakedTextures(experience);
+        this.timeZone = new TimeZone(experience, this.bakedTextures);
         this.navigation = new Navigation(experience);
         this.googleLedLights = new GoogleLedLights(experience);
         this.emissionLights = new EmissionLights(experience);
         this.coffeeSteam = new CoffeSteam(experience);
         this.chairTop = new ChairTop(experience);
         this.screenAnimation = new ScreenAnimation(experience);
-        this.timeZone = new TimeZone(experience);
-        this.bakedTextures = new BakedTextures(experience, this.timeZone);
 
 
-        this.setUp3dRoom();
+
+        if (this.timeZone.isDayTime) {
+            this.setUp3dRoom('3dRoomDay' as GroupNamesType);
+        } else {
+            this.setUp3dRoom('3dRoomNight' as GroupNamesType);
+        }
+
 
     }
 
 
-    setUp3dRoom() {
-        this.experience.resourcesLoader.on("3dRoomReady", () => {
+    setUp3dRoom(groupName: GroupNamesType) {
+        this.experience.resourcesLoader.on(`${groupName}Ready`, () => {
             this.bakedTextures.setUp();
+
 
 
             // loop through scene children and add material to the appropriate model
