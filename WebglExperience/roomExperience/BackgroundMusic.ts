@@ -16,13 +16,15 @@ export default class BackgroundMusic {
 
         this.audioEl.addEventListener('canplaythrough', () => {
             document.addEventListener('click', userInteracted)
+            document.addEventListener('touchstart', userInteracted)
         })
 
         const userInteracted = () => {
             this.audioEl.play();
             this.audioEl.muted = false;
             musicPlayWrapper.style.display = 'initial';
-            document.removeEventListener('click', userInteracted)
+            document.removeEventListener('click', userInteracted);
+            document.removeEventListener('touchstart', userInteracted);
         }
 
 
