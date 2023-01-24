@@ -14,6 +14,7 @@ import TimeZone from './TimeZone';
 import BakedTextures from './BakedTexture';
 // import IdentifyModel from './IdentifyModel';
 import Loading from './Loading';
+import BackgroundMusic from './BackgroundMusic';
 
 
 
@@ -33,6 +34,7 @@ export default class World {
     screenAnimation: ScreenAnimation;
     timeZone: TimeZone;
     bakedTextures: BakedTextures
+    backgroundMusic: BackgroundMusic
 
     constructor(experience: RoomExperience) {
         // Initialize
@@ -41,7 +43,8 @@ export default class World {
         this.debugUI = experience.debugUI;
         this.time = experience.time;
 
-        this.loading = new Loading(experience);
+        this.backgroundMusic = new BackgroundMusic();
+        this.loading = new Loading(experience, this.backgroundMusic);
         this.bakedTextures = new BakedTextures(experience);
         this.timeZone = new TimeZone(experience, this.bakedTextures, this.loading);
         this.navigation = new Navigation(experience);

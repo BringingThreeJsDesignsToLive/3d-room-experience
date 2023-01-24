@@ -1,12 +1,15 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
 import RoomExperience from ".";
+import BackgroundMusic from './BackgroundMusic';
 
 export default class Loading {
     loadingManager: THREE.LoadingManager
     countDownEl: HTMLElement;
-    constructor(experience: RoomExperience) {
+    backgroundMusic: BackgroundMusic;
+    constructor(experience: RoomExperience, backgroundMusic: BackgroundMusic) {
         this.loadingManager = new THREE.LoadingManager();
+        this.backgroundMusic = backgroundMusic
         this.countDownEl = document.querySelector("#loadingCountDown")!;
 
         this.loadingManager.onStart = this.onStart.bind(this);
@@ -33,6 +36,7 @@ export default class Loading {
     }
 
     private onLoad() {
+        this.backgroundMusic.setUp();
         const loadingComponent = document.querySelector(".loadingState") as HTMLElement;
         const loadingWrapper = document.querySelector(".loading-wrapper") as HTMLElement;
         const loadingFadeIn = document.querySelector("#loadingFadeIn") as HTMLElement;
@@ -42,6 +46,7 @@ export default class Loading {
         tl.to(
             loadingFadeIn.children,
             {
+                delay: 1.5,
                 translateY: `0px`,
                 opacity: 1,
                 duration: 1,

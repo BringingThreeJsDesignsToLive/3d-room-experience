@@ -206,13 +206,13 @@ export default class BakedTextures {
             }
 
             if (light.intensity.flow === 'Add') {
-                this.baked1Material.uniforms[`${light.name}Intensity`].value += Math.min(this.time.deltaTime * light.intensity.offset, light.intensity.max);
+                this.baked1Material.uniforms[`${light.name}Intensity`].value += Math.min(this.time.deltaTime * light.intensity.offset, light.intensity.max + 0.5);
 
-                this.baked2Material.uniforms[`${light.name}Intensity`].value += Math.min(this.time.deltaTime * light.intensity.offset, light.intensity.max);
+                this.baked2Material.uniforms[`${light.name}Intensity`].value += Math.min(this.time.deltaTime * light.intensity.offset, light.intensity.max + 0.5);
             } else {
-                this.baked1Material.uniforms[`${light.name}Intensity`].value -= Math.max(this.time.deltaTime * light.intensity.offset, light.intensity.min);
+                this.baked1Material.uniforms[`${light.name}Intensity`].value -= Math.max(this.time.deltaTime * light.intensity.offset, light.intensity.min - 0.5);
 
-                this.baked2Material.uniforms[`${light.name}Intensity`].value -= Math.max(this.time.deltaTime * light.intensity.offset, light.intensity.min);
+                this.baked2Material.uniforms[`${light.name}Intensity`].value -= Math.max(this.time.deltaTime * light.intensity.offset, light.intensity.min - 0.5);
             }
         })
 

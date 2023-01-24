@@ -1,21 +1,26 @@
 import Head from 'next/head'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import LoadingOverlay from '../components/LoadingOverlay';
 import MuiCustomizedSwitch from '../components/MuiCustomizedSwitch';
+import MusicPlayIcons from '../components/MusicPlayIcons';
 import RoomExperience from '../WebglExperience/roomExperience';
 
 export default function Home() {
   const canvas = useRef<HTMLCanvasElement>(null);
+  const experience = useRef<RoomExperience | null>(null);
+
+  const togglePlay = useCallback((value: boolean) => {
+    experience.current?.world.backgroundMusic.onToggleState(value)
+  }, [])
 
   useEffect(() => {
-    let experience: RoomExperience;
     if (canvas.current) {
-      experience = new RoomExperience(canvas.current);
+      experience.current = new RoomExperience(canvas.current);
       (window as any).experience = experience;
       // console.log(experience)
     }
 
-    return () => experience.destroyExperience();
+    return () => experience.current?.destroyExperience();
   }, [canvas])
   return (
     <div className='app-wrapper'>
@@ -28,6 +33,7 @@ export default function Home() {
       <main className='webGl-Wrapper'>
         <canvas className='webGl-canvas' ref={canvas}></canvas>
         <MuiCustomizedSwitch />
+        <MusicPlayIcons togglePlay={togglePlay} />
       </main>
 
     </div>

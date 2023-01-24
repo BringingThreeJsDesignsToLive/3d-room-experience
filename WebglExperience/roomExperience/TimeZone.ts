@@ -65,6 +65,12 @@ export default class TimeZone {
         this.setUpSunLight(geometry);
         this.setUpMoonLight(geometry);
 
+        if (this.isDayTime) {
+            this.moonlight.visible = false
+        } else {
+            this.sunlight.visible = false
+        }
+
         currentTimeSwitch.addEventListener('change', this.onCurrentTimeChange.bind(this))
 
 
