@@ -6,7 +6,7 @@ function LoadingOverlay() {
         <div className='loadingState'>
             <div className='loading-wrapper'>
                 <div id='loadingCountDownWrapper'>
-                    <h1 id='loadingCountDown'></h1>
+                    <h1 id='loadingCountDown'>0%</h1>
                     <small>
                         <Watch
                             height="25"

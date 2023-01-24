@@ -199,27 +199,22 @@ export default class BakedTextures {
     private handleBackLightIntensity() {
         this.backLights.forEach((light) => {
             if (this.baked1Material.uniforms[`${light.name}Intensity`].value >= light.intensity.max) {
-                this.baked1Material.uniforms[`${light.name}Intensity`].value = light.intensity.max;
-                this.baked2Material.uniforms[`${light.name}Intensity`].value = light.intensity.max;
                 light.intensity.flow = 'Subtract';
             }
             if (this.baked1Material.uniforms[`${light.name}Intensity`].value <= light.intensity.min) {
-                this.baked1Material.uniforms[`${light.name}Intensity`].value = light.intensity.min;
-                this.baked2Material.uniforms[`${light.name}Intensity`].value = light.intensity.min;
                 light.intensity.flow = 'Add';
             }
 
             if (light.intensity.flow === 'Add') {
-                this.baked1Material.uniforms[`${light.name}Intensity`].value += this.time.deltaTime * light.intensity.offset;
+                this.baked1Material.uniforms[`${light.name}Intensity`].value += Math.min(this.time.deltaTime * light.intensity.offset, light.intensity.max);
 
-                this.baked2Material.uniforms[`${light.name}Intensity`].value += this.time.deltaTime * light.intensity.offset;
+                this.baked2Material.uniforms[`${light.name}Intensity`].value += Math.min(this.time.deltaTime * light.intensity.offset, light.intensity.max);
             } else {
-                this.baked1Material.uniforms[`${light.name}Intensity`].value -= this.time.deltaTime * light.intensity.offset;
+                this.baked1Material.uniforms[`${light.name}Intensity`].value -= Math.max(this.time.deltaTime * light.intensity.offset, light.intensity.min);
 
-                this.baked2Material.uniforms[`${light.name}Intensity`].value -= this.time.deltaTime * light.intensity.offset;
+                this.baked2Material.uniforms[`${light.name}Intensity`].value -= Math.max(this.time.deltaTime * light.intensity.offset, light.intensity.min);
             }
         })
-
 
     }
 
