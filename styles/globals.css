@@ -1,21 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
-body {
+html {
   margin: 0;
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  background-color: black;
 }
 
-html,
+body,
 #__next {
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
+
+.app-wrapper {
+  position: relative;
+}
+
+/* Web Gl Wrapper And Element */
 
 .webGl-Wrapper {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -24,11 +37,54 @@ html,
   height: 100%;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
+
+/* MUI switch  */
 
 .mui-switch-wrapper {
   position: fixed;
   top: .5em;
   right: .5em;
   z-index: 2;
+}
+
+
+/* Loading Overlay */
+.loading-wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+#loadingCountDownWrapper {
+  display: flex;
+}
+
+#loadingCountDownWrapper small {
+  align-self: flex-end;
+}
+
+#loadingCountDown {
+  color: white;
+  font-size: 5rem;
+}
+
+#loadingFadeIn {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  display: none;
+}
+
+#loadingFadeIn span {
+  flex: 1;
+  background-color: white;
 }

@@ -11,9 +11,9 @@ import CoffeSteam from './CoffeSteam';
 import ChairTop from './ChairTop';
 import ScreenAnimation, { ScreenMeshType } from './ScreenAnimation';
 import TimeZone from './TimeZone';
-import vertexShader from './shaders/bakedTextures/vertex.glsl';
-import fragmentShader from './shaders/bakedTextures/fragment.glsl';
 import BakedTextures from './BakedTexture';
+import IdentifyModel from './IdentifyModel';
+import Loading from './Loading';
 
 
 
@@ -28,6 +28,8 @@ export default class World {
     emissionLights: EmissionLights;
     coffeeSteam: CoffeSteam;
     chairTop: ChairTop;
+    // identifyModel: IdentifyModel;
+    loading: Loading;
     screenAnimation: ScreenAnimation;
     timeZone: TimeZone;
     bakedTextures: BakedTextures
@@ -39,14 +41,16 @@ export default class World {
         this.debugUI = experience.debugUI;
         this.time = experience.time;
 
+        this.loading = new Loading(experience);
         this.bakedTextures = new BakedTextures(experience);
-        this.timeZone = new TimeZone(experience, this.bakedTextures);
+        this.timeZone = new TimeZone(experience, this.bakedTextures, this.loading);
         this.navigation = new Navigation(experience);
         this.googleLedLights = new GoogleLedLights(experience);
         this.emissionLights = new EmissionLights(experience);
         this.coffeeSteam = new CoffeSteam(experience);
         this.chairTop = new ChairTop(experience);
         this.screenAnimation = new ScreenAnimation(experience);
+        // this.identifyModel = new IdentifyModel(experience);
 
 
 
@@ -126,6 +130,7 @@ export default class World {
         this.screenAnimation.update();
         this.timeZone.update();
         this.bakedTextures.update();
+        // this.identifyModel.update();
 
 
     }

@@ -40,7 +40,7 @@ export default class RoomExperience extends DefaultExperience {
         this.time.on('tick', this.updateWithTick.bind(this))
     }
 
-    updateWithTick() {
+    private updateWithTick() {
         this.world.update()
         this.camera.update()
         this.renderer.update()

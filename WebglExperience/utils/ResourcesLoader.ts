@@ -3,7 +3,6 @@ import * as THREE from 'three'
 import { EventEmitter } from "./EventEmitter";
 import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { LoadingManager } from "three";
 
 interface fileObj {
     name: string,
@@ -18,7 +17,6 @@ interface itemsTypes {
 
 export default class ResourcesLoader extends EventEmitter {
     private sources!: Sources[];
-    private loadingManager: LoadingManager | undefined;
     items: itemsTypes;
     private groupedItems: any;
     private toLoad!: number;
@@ -27,10 +25,9 @@ export default class ResourcesLoader extends EventEmitter {
     private cubeTextureLoader!: THREE.CubeTextureLoader;
     private textureLoader!: THREE.TextureLoader
 
-    constructor(sources: Sources[] | undefined, loadingManager?: LoadingManager) {
+    constructor(sources: Sources[] | undefined) {
         // Initialize
-        super()
-        this.loadingManager = loadingManager;
+        super();
         this.sources = [];
 
         this.items = {}
@@ -44,9 +41,10 @@ export default class ResourcesLoader extends EventEmitter {
 
     }
 
-    loadSources(sources: Sources[]) {
+    loadSources(sources: Sources[], loadingManager?: THREE.LoadingManager) {
         this.toLoad = sources.length;
         this.sources = [...this.sources, ...sources];
+
 
         // map and extract source groupName if its grouped 
         sources.forEach(source => {
@@ -56,22 +54,23 @@ export default class ResourcesLoader extends EventEmitter {
 
         })
 
+        this.textureLoader = new THREE.TextureLoader(loadingManager);
+        this.cubeTextureLoader = new THREE.CubeTextureLoader(loadingManager);
+        this.gltfLoader = new GLTFLoader(loadingManager);
+
         // loop through and load each sources passed base on their source type
         sources.forEach((source) => {
             if (source.type === 'texture') {
-                if (!this.textureLoader) this.textureLoader = new THREE.TextureLoader(this.loadingManager)
                 this.textureLoader.load(<string>source.path, (texture) => {
                     texture.name = 'texture'
                     this.sourceLoaded(source, texture)
                 })
             } else if (source.type === 'cubeTexture') {
-                if (this.cubeTextureLoader) this.cubeTextureLoader = new THREE.CubeTextureLoader(this.loadingManager)
                 this.cubeTextureLoader.load(<string[]>source.path, (cubeTexture) => {
                     cubeTexture.name = 'cubeTexture'
                     this.sourceLoaded(source, cubeTexture)
                 })
             } else if (source.type === 'gltfModel') {
-                if (!this.gltfLoader) this.gltfLoader = new GLTFLoader(this.loadingManager);
                 if (source.useDraco) {
                     // Load and use Draco Loader
                     const dracoLoader = new DRACOLoader();

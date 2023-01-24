@@ -10,6 +10,7 @@ import getIsDayTime from '../../utils/getIsDayTime';
 import ResourcesLoader from '../utils/ResourcesLoader';
 import { Sources } from '../utils/types';
 import BakedTextures from './BakedTexture';
+import Loading from './Loading';
 
 export default class TimeZone {
     time: Time;
@@ -17,16 +18,18 @@ export default class TimeZone {
     scene: THREE.Scene;
     resourceLoader: ResourcesLoader;
     bakedTextures: BakedTextures;
+    loading: Loading;
     sunlight!: THREE.Mesh;
     sunLightMaterial!: THREE.ShaderMaterial;
     moonlight!: THREE.Mesh;
     moonLightMaterial!: THREE.ShaderMaterial;
     isDayTime!: boolean;
-    constructor(experience: RoomExperience, bakedTextures: BakedTextures) {
+    constructor(experience: RoomExperience, bakedTextures: BakedTextures, loading: Loading) {
         this.time = experience.time;
         this.debugUI = experience.debugUI;
         this.scene = experience.scene;
         this.resourceLoader = experience.resourcesLoader;
+        this.loading = loading;
         this.bakedTextures = bakedTextures
 
         this.setUp();
@@ -55,7 +58,7 @@ export default class TimeZone {
             })
         }
 
-        this.resourceLoader.loadSources(sources);
+        this.resourceLoader.loadSources(sources, this.loading.loadingManager);
 
 
         const geometry = new THREE.PlaneGeometry(1.5, 1.5, 1, 1);

@@ -2,7 +2,6 @@
  * THIS FILE CONTAINS ALL THE ASSESTS e.g textures, THAT WILL BE USED IN THE LOGIN PAGE EXPERIENCE
  */
 import * as THREE from 'three'
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Sources } from '../utils/types';
 
 const groupNames = ['3dRoomNight', '3dRoomDay'] as const;

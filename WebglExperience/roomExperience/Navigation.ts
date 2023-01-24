@@ -92,10 +92,10 @@ export default class Navigation {
                 smoothed: zoomValue,
                 smoothing: 0.002,
                 sensitivity: 0.001,
-                // maxDistance: 3.6,
-                // minDistance: 1
                 maxDistance: 3.6,
-                minDistance: -5
+                minDistance: 1
+                // maxDistance: 3.6,
+                // minDistance: -5
             },
             target: {
                 value: targetValue.clone(),
@@ -182,6 +182,7 @@ export default class Navigation {
             const target = new THREE.Vector3();
             const up = new THREE.Vector3(0, 1, 0);
             const right = new THREE.Vector3(-1, 0, 0);
+
 
             // get where camera is looking at
             up.applyQuaternion(this.camera.quaternion);
