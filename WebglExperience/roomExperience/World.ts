@@ -12,7 +12,7 @@ import ChairTop from './ChairTop';
 import ScreenAnimation, { ScreenMeshType } from './ScreenAnimation';
 import TimeZone from './TimeZone';
 import BakedTextures from './BakedTexture';
-import IdentifyModel from './IdentifyModel';
+// import IdentifyModel from './IdentifyModel';
 import Loading from './Loading';
 
 
