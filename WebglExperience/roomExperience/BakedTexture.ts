@@ -116,7 +116,7 @@ export default class BakedTextures {
             baked2Texture = this.loadedResource.baked2Night
 
             //  Now Load Day texture
-            sourceDayClone.forEach(source => source.totalGroupMember = sourceNightClone.length);
+            this.loadRemainingResource(true, sourceDayClone, "3dRoomDay" as GroupNamesType)
 
         }
 
