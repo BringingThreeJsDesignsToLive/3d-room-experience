@@ -16,7 +16,7 @@ export default class BackgroundMusic {
 
         this.audioEl.addEventListener('canplaythrough', () => {
             document.addEventListener('click', userInteracted)
-            document.addEventListener('touchstart', userInteracted)
+            document.addEventListener('touchend', userInteracted)
         })
 
         const userInteracted = () => {
@@ -24,7 +24,7 @@ export default class BackgroundMusic {
             this.audioEl.muted = false;
             musicPlayWrapper.style.display = 'initial';
             document.removeEventListener('click', userInteracted);
-            document.removeEventListener('touchstart', userInteracted);
+            document.removeEventListener('touchend', userInteracted);
         }
 
 
