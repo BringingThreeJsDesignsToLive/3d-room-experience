@@ -20,6 +20,7 @@ export default class BackgroundMusic {
         })
 
         const userInteracted = () => {
+            console.log("touched")
             this.audioEl.play();
             this.audioEl.muted = false;
             musicPlayWrapper.style.display = 'initial';
